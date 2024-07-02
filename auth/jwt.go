@@ -93,10 +93,11 @@ func permissionDenied(w http.ResponseWriter) {
 	utils.WriteError(w, http.StatusUnauthorized, fmt.Errorf("Unauthorized"))
 }
 
-func GetUserIDFromContext(c context.Context) int {
+func GetUserIDFromContext(c context.Context) *int {
 	userID, ok := c.Value(UserKey).(int)
 	if !ok {
-		return -1
+		err := 0
+		return &err
 	}
-	return userID
+	return &userID
 }
