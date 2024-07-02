@@ -3,6 +3,7 @@ package cart
 import (
 	"fmt"
 	"net/http"
+	"store-api/auth"
 	"store-api/types"
 	"store-api/utils"
 
@@ -13,18 +14,19 @@ import (
 type Handler struct {
 	store        types.OrderStore
 	productStore types.ProductStore
+	userStore    types.UserStore
 }
 
-func NewHandler(store types.OrderStore, productStore types.ProductStore) *Handler {
-	return &Handler{store: store}
+func NewHandler(store types.OrderStore, productStore types.ProductStore, userStore types.UserStore) *Handler {
+	return &Handler{store, productStore, userStore}
 }
 
 func (h *Handler) RegisterRoutes(router *mux.Router) {
-	router.HandleFunc("/cart/checkout", h.handleCheckout).Methods(http.MethodPost)
+	router.HandleFunc("/cart/checkout", auth.WithJWT(h.handleCheckout, h.userStore)).Methods(http.MethodPost)
 }
 
 func (h *Handler) handleCheckout(w http.ResponseWriter, r *http.Request) {
-	userID := 0
+	userID := auth.GetUserIDFromContext(r.Context())
 
 	var cart types.CartCheckoutPayload
 	if err := utils.ParseJSON(r, &cart); err != nil {

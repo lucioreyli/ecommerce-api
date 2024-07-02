@@ -16,7 +16,7 @@ func NewStore(db *sql.DB) *Store {
 }
 
 func (s *Store) GetProducts() ([]types.Product, error) {
-	rows, err := s.db.Query("SELECT * FROM products")
+	rows, err := s.db.Query("SELECT * FROM products;")
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +60,7 @@ func (s *Store) GetProductsByIDs(productIDs []int) ([]types.Product, error) {
 		args[i] = productID
 	}
 
-	rows, err := s.db.Query(query, args)
+	rows, err := s.db.Query(query, args...)
 	if err != nil {
 		return nil, err
 	}
