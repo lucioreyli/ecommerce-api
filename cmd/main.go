@@ -20,7 +20,6 @@ func main() {
 		AllowNativePasswords: true,
 		ParseTime:            true,
 	})
-
 	if err != nil {
 		log.Fatal(err)
 	}
