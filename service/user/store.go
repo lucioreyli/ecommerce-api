@@ -15,17 +15,17 @@ func NewStore(db *sql.DB) *Store {
 }
 
 func (s *Store) GetUserByEmail(email string) (*types.User, error) {
-	rows, err := s.db.Query("SELECT * FROM users WHEN email = ? LIMIT 1", email)
+	rows, err := s.db.Query("SELECT * FROM users WHERE email = ? LIMIT 1", email)
 	if err != nil {
 		return nil, err
 	}
+
 	u := new(types.User)
 	for rows.Next() {
-		u, err := scanRowIntoUser(rows)
+		u, err = scanRowIntoUser(rows)
 		if err != nil {
 			return nil, err
 		}
-		return u, nil
 	}
 
 	if u.ID == 0 {
@@ -51,10 +51,11 @@ func scanRowIntoUser(rows *sql.Rows) (*types.User, error) {
 }
 
 func (s *Store) GetUserByID(id int) (*types.User, error) {
-	rows, err := s.db.Query("SELECT * FROM users WHEN id = ? LIMIT 1", id)
+	rows, err := s.db.Query("SELECT * FROM users WHERE id = ? LIMIT 1", id)
 	if err != nil {
 		return nil, err
 	}
+
 	u := new(types.User)
 	for rows.Next() {
 		u, err := scanRowIntoUser(rows)
