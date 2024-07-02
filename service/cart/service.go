@@ -31,7 +31,7 @@ func (h *Handler) createOrder(ps []types.Product, items []types.CartItem, userId
 		product := productMap[item.ProductID]
 		product.Quantity -= item.Quantity
 
-		h.productStore.UpdateProduct(product)
+		go h.productStore.UpdateProduct(product)
 	}
 
 	orderID, err := h.store.CreateOrder(types.Order{
