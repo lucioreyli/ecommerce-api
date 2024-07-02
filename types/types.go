@@ -9,8 +9,8 @@ type UserStore interface {
 }
 
 type ProductStore interface {
-	GetProductById(id int) (*Product, error)
-	GetProducts(id int) ([]Product, error)
+	// CreateProduct(Product) error
+	GetProducts() ([]Product, error)
 }
 
 type User struct {
