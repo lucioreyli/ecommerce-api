@@ -43,7 +43,7 @@ func (h *Handler) handleLogin(w http.ResponseWriter, r *http.Request) {
 		utils.WriteError(
 			w,
 			http.StatusNotFound,
-			fmt.Errorf("Not found. Invalid e-mail or password"),
+			fmt.Errorf("not found. Invalid e-mail or password"),
 		)
 		return
 	}
@@ -52,7 +52,7 @@ func (h *Handler) handleLogin(w http.ResponseWriter, r *http.Request) {
 		utils.WriteError(
 			w,
 			http.StatusUnauthorized,
-			fmt.Errorf("Not found. Invalid e-mail or password"),
+			fmt.Errorf("not found. Invalid e-mail or password"),
 		)
 		return
 	}
@@ -89,7 +89,7 @@ func (h *Handler) handleRegister(w http.ResponseWriter, r *http.Request) {
 		utils.WriteError(
 			w,
 			http.StatusBadRequest,
-			fmt.Errorf("User already with e-mail %s exists", payload.Email),
+			fmt.Errorf("user already with e-mail %s exists", payload.Email),
 		)
 		return
 	}
